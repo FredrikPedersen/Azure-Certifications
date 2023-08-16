@@ -2,27 +2,28 @@
 
 https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/
 
-[1 Cloud Computing](#1-cloud-computing)
- - [1.1 What is cloud computing](#what-is-cloud-computing)
- - [1.2 The shared responsibility model](#the-shared-responsibility-model)
- - [1.3 Cloud Models](#cloud-models)
- - [1.4 The Consumption Based Model](#the-consumption-based-model)  
+[1 Cloud Computing](#ins1-cloud-computingins)
+ - [1.1 What is cloud computing](#inswhat-is-cloud-computingins)
+ - [1.2 The shared responsibility model](#insthe-shared-responsibility-modelins)
+ - [1.3 Cloud Models](#inscloud-modelsins)
+ - [1.4 The Consumption Based Model](#insthe-consumption-based-modelins)  
 
-[2 The Benefits of Using Cloud Services](#2-the-benefits-of-using-cloud-services)
- - [2.1 High Availability](#high-availability)
- - [2.2 Scalability](#scalability)
- - [2.3 Reliability](#reliability)
- - [2.4 Security and Governance](#security-and-governance)
- - [2.5 Manageability](#manageability)
+[2 The Benefits of Using Cloud Services](#ins2-the-benefits-of-using-cloud-servicesins)
+ - [2.1 High Availability](#inshigh-availabilityins)
+ - [2.2 Scalability](#insscalabilityins)
+ - [2.3 Reliability](#insreliabilityins)
+ - [2.4 Security and Governance](#inssecurity-and-governanceins)
+ - [2.5 Manageability](#insmanageabilityins)
 
-[3 Cloud Service Types](#3-cloud-service-types)
- - [3.1 Infrastructure as a Service (Iaas)](#infrastructure-as-a-service)
- - [3.2 Platform as a Service (PaaS)](#platform-as-a-service)
- - [3.3 Software as a Service (SaaS)](#software-as-a-service)
+[3 Cloud Service Types](#ins3-cloud-service-typesins)
+ - [3.1 Infrastructure as a Service (Iaas)](#insinfrastructure-as-a-serviceins)
+ - [3.2 Platform as a Service (PaaS)](#insplatform-as-a-serviceins)
+ - [3.3 Software as a Service (SaaS)](#inssoftware-as-a-serviceins)
 
-[4 Core Architectural Components of Azure](#4-core-architectural-components-of-azure)
-
-
+[4 Core Architectural Components of Azure](#ins4-core-architectural-components-of-azureins)
+ - [4.1 Physical Infrastructure](#ins-physical-infrastructure-ins)
+ - [4.2 Management Infrastructure](#ins-management-infrastructure-ins)
+ - [4.3 Compute and Networking Services](#ins-compute-and-networking-services-ins)
 
 ## <ins>1 Cloud Computing</ins>
 
@@ -290,3 +291,140 @@ amount of technical knowledge or expertise to fully employ.
  - Finance and expense tracking.
 
 ## <ins>4 Core Architectural Components of Azure</ins>
+
+The core architectural components of Azure may be broken down into two main groupings: the physical infrastructure, and 
+the management infrastructure.
+
+### <ins> Physical Infrastructure </ins>
+
+The physical infrastructure for Azure starts with datacenters. Conceptually, the datacenters are the same as large
+corporate datacenters. They're facilities with resources arranged in rack, with dedicated power, cooling and networking 
+infrastructure.
+
+Azure has datacenters around the world. They are however, not directly accessible, and are grouped into Azure Regions
+or Azure Availability Zones that are designed to help you achieve resiliency and reliability.
+
+#### <ins> Regions </ins>
+
+A region is a geographical area on the planet that contains at least one, but potentially multiple datacenters that are
+nearby and networked together with a low-latency network. Azure intelligently assigns and controls the resources within
+each region to ensure workloads are appropriately balenced.
+
+When you deploy a resource in Azure, you'll often need to choose the region where you want your resource deployed.
+
+#### <ins> Availability Zones </ins>
+
+Availability Zones are physically separate datacenters within an Azure Region. Each availability zone is made up of one 
+or more datacenters equipped with independent power, cooling and networking. An availability zones is set up to be an 
+isolation boundry. If one zone goes down, the other continues working.
+
+A minimum of three availability zones are present in all availability zone-enabled regions, but not all Azure Regions currently
+support availability zones.
+
+<img alt="Availability Zones diagram" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-core-architectural-components-of-azure/media/availability-zones-c22f95a3.png"/>
+
+#### <ins> Availability Zones in Apps </ins>
+
+You want to ensure your services and data are redundant so you can protect your information in case of failure.
+When you host your infrastructure, setting up your own redundancy requires that you create duplicate hardware environments.
+
+You can use availability zones to run mission-critical applications and build high-availability into your application
+architecture by co-locating your resources within an availability zone and replicating in other availability zones.
+
+Availability zones are primarily for VMs, managed disks, load balancers, and SQL databases. Azure services that support 
+availability zones fall into three categories:
+ - Zonal services: You pin the resource to a specific zone (for example, VMs, managed disks, IP addresses).
+ - Zone-redundant services: The platform replicates automatically across zones (for example, zone-redundant storage, SQL Database).
+ - Non-regional services: Services are always available from Azure geographies and are resilient to zone-wide outages as well as region-wide outages.
+
+#### <ins> Region Pairs </ins>
+
+Region pairs is like availability zones, but for entire regions instead.
+
+Most Azure regions are paired with another region within the same geography (such as US, Europe or Asia), at least 300
+miles away. Because the pair of regions are directly connected and far enough apart to be isolated from regional disasters,
+you can use them to provide reliable services and data redundancy.
+
+<img alt="Region Pair diagram" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-core-architectural-components-of-azure/media/region-pairs-7c495a33.png"/>
+
+#### <ins> Sovereign Regions </ins>
+
+In addition to regular regions, Azure also has sovereign regions. Sovereign regions are instances of Azure that are isolated
+from the main instance of Azure. YOu may need to use a sovereign region for compliance or legal purposes.
+
+### <ins> Management Infrastructure </ins>
+
+The management infrastructure includes Azure resources and resource groups, subscriptions and accounts.
+Understanding the hierarchical organization will help you plan projects and products within Azure.
+
+#### <ins> Resources and Resource Groups </ins>
+
+A resource is the basic building block of Azure. Anything you create, provision, deploy, etc. is a resource.
+Resource Groups are simply groupings of resources. When you create a resource, you're required to place it into a resource group.
+While a resource group can contain many resources, a single resource can only be in one resource group, and resource groups can't be nested.
+
+When you apply an action to a resource group, that action will apply to all the resources within the group, e.g if you grant access
+to a resource group, you grant access to all the resources within it.
+
+There aren't any hard rules about how you use resource groups, so consider how to set up resource groups to maximize their
+usefulnes to you.
+
+#### <ins> Azure Subscriptions </ins>
+
+In Azure, subscriptions are a unit of management, billing, and scale. 
+Similar to how resource groups are a way to logically organize resources, subscriptions allow you to logically organize
+your resource groups and facilitate billing.
+
+<img alt="subscriptions model" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-core-architectural-components-of-azure/media/subscriptions-d415577b.png"/>
+
+Using Azure requires an Azure subscription. A subscription provides you with authenticated and authorized access to Azure
+products and services. It also allows you to provision resources. An Azure subscription links to an Azure account, 
+which is an identity in Azure Active Directory (Azure AD) or in a directory that Azure AD trusts.
+
+An account can have multiple subscriptions, but only one is required.  In a multi-subscription account,
+you can use Azure subscriptions to define boundaries around Azure products, services, and resources. 
+There are two types of subscription boundaries that you can use:
+
+ - **Billing boundary**: This subscription type determines how an Azure account is billed for using Azure. 
+You can create multiple subscriptions for different types of billing requirements. Azure generates 
+separate billing reports and invoices for each subscription so that you can organize and manage costs.
+ - **Access control boundary**: Azure applies access-management policies at the subscription level, 
+and you can create separate subscriptions to reflect different organizational structures. An example 
+is that within a business, you have different departments to which you apply distinct Azure subscription policies. 
+This billing model allows you to manage and control access to the resources that users provision with specific 
+subscriptions.
+
+#### <ins> Azure Management Groups </ins>
+
+At the top of the management infrastructure, we have management groups.
+Resources are gathered in resource groups, resource groups are gathered into subscriptions.
+If you're dealing with multiple applications, development teams or geographies over multiple subscriptions, you might need
+a way to efficiently manage access, policies and compliance for those subscriptions.
+
+Azure management groups provide a level of scope above subscriptions. You organize subscriptions into containers called
+management groups and apply governance conditions to the management groups.
+
+Management groups can be nested.
+
+#### <ins> Management group, subscriptions, and resource group hierarchy </ins>
+
+You can build a flexible structure of management groups and subscriptions to organize your resources into a hierarchy 
+for unified policy and access management.
+
+<img alt="management group hierarchy diagram" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-core-architectural-components-of-azure/media/management-groups-subscriptions-dfd5a108.png">
+
+Some examples of how you could use management groups might be:
+
+ - **Create a hierarchy that applies a policy**. You could limit VM locations to the US West Region in a group called Production. 
+This policy will inherit onto all the subscriptions that are descendants of that management group and will apply to all 
+VMs under those subscriptions. This security policy can't be altered by the resource or subscription owner, which allows 
+for improved governance.
+ - **Provide user access to multiple subscriptions**. By moving multiple subscriptions under a management group, you can 
+create one Azure role-based access control (Azure RBAC) assignment on the management group. Assigning Azure RBAC at the 
+management group level means that all sub-management groups, subscriptions, resource groups, and resources underneath 
+that management group would also inherit those permissions. One assignment on the management group can enable users to 
+have access to everything they need instead of scripting Azure RBAC over different subscriptions.
+
+### <ins> Compute and Networking Services </ins>
+
+You are here: https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/
