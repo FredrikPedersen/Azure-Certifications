@@ -27,15 +27,6 @@ https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azu
 
 ## <ins>1 Cloud Computing</ins>
 
-### <ins>Learning Goals</ins>
-
- - Define cloud computing
- - Describe the shared responsibility model
- - Define cloud models, including public, private and hybrid
- - Identify appropriate use cases for each cloud model
- - Describe the consumption-based model
- - Compare cloud pricing models
-
 ### <ins>What is cloud computing?</ins>
 
 **Cloud computing is the delivery of computing services over the internet**. Computing services include common
@@ -144,12 +135,6 @@ The consumption based model has many benefits, including:
 
 ## <ins>2 The Benefits of Using Cloud Services</ins>
 
-### <ins>Learning goals</ins>
- - Describe the benefits of high availability in the cloud
- - Describe the benefits of reliability and predictability in the cloud
- - Describe the benefits of security and governance in the cloud
- - Describe the benefits of manageability in the cloud
-
 When building or deploying a cloud application, two of the biggest considerations are uptime (or availability) and the 
 ability to handle demand (or scale).
 
@@ -239,12 +224,6 @@ Management in the cloud speaks to how you're able to manage your cloud environme
  - Using PowerShell
 
 ## <ins>3 Cloud Service Types</ins>
-
-### <ins>Learning Goals</ins>
- - Describe infrastructure as a service (IaaS). 
- - Describe platform as a service (PaaS). 
- - Describe software as a service (SaaS). 
- - Identify appropriate use cases for each cloud service (IaaS, PaaS, SaaS).
 
 <img alt="Cloud Service Types" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-cloud-compute/media/shared-responsibility-b3829bfe.svg" width="1000px"/>
 
@@ -427,4 +406,137 @@ have access to everything they need instead of scripting Azure RBAC over differe
 
 ### <ins> Compute and Networking Services </ins>
 
-You are here: https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/
+#### <ins> Virtual Machines </ins>
+
+With Azure Virtual Machines, you can create and use VMs in the cloud.
+VMs provide IaaS in the form of a virtualized server, and can be used in many ways.
+VMs are ideal when you need:
+ - Total control over the operating system
+ - The ability to run custom software
+ - To use custom hosting configurations
+
+You can create or use an already created image to rapidly provision VMS.
+A preconfigured image is a template used to create a VM and may already include OS and other software, and let's
+you provision av VM in minutes.
+
+#### <ins> Scale VMs in Azure </ins>
+
+You can run single VMs for testing, development or other tasks, or you can group VMs together to provide high
+availability, scalability and redundancy.
+
+Virtual machine scale lets you create nd manage a group of identical, load-balanced VMs. If you simply created multiple
+VMs with the same purpose, you'd need to ensure they were all configured identically and then set up network
+routing parameters to ensure efficiency. You’d also have to monitor the utilization to determine if you need to increase 
+or decrease the number of VMs.
+
+Instead, with VM scale sets, Azure automates most of that work. It enables you to centrally manage, configure and update 
+a large number of VMs.
+
+#### <ins> Virtual Machine availability sets </ins>
+
+VM availability sets are another tool to help you build a more resilient, highly available environment.
+Availability sets are designed to ensure that VMs stagger updates and have varied power and network connectivity,
+preventing you from losing all your VMs with a single network or power failure.
+
+Availability sets do this by grouping VMs in two ways: update domain and fault domain.
+
+ - **Update domain:** The update domain groups VMs that can be rebooted at the same time. This allows you to apply updates 
+while knowing that only one update domain grouping will be offline at a time. All of the machines in one update domain 
+will be updated. 
+ - **Fault domain:** The fault domain groups your VMs by common power source and network switch. 
+This helps protect against a physical power or networking failure by having VMs connected to different power and 
+networking resources.
+
+#### <ins> When to use VMS </ins>
+
+ - During testing and development. VMs provide a quick and easy way to create different OS and application configurations.
+Test and development personnel can then easily delete the VMs when they no longer need them.
+ - When running applications in the cloud. The ability to run certain applications in the public cloud as opposed to 
+creating a traditional infrastructure to run them can provide substantial economic benefits. For example, an application 
+might need to handle fluctuations in demand. Shutting down VMs when you don't need them or quickly starting them up to
+meet a sudden increase in demand means you pay only for the resources you use.
+ - When extending your datacenter to the cloud: An organization can extend the capabilities of its own on-premises 
+network by creating a virtual network in Azure and adding VMs to that virtual network. Applications like SharePoint can
+then run on an Azure VM instead of running locally. This arrangement makes it easier or less expensive to deploy than in
+an on-premises environment.
+ - During disaster recovery: As with running certain types of applications in the cloud and extending an on-premises 
+network to the cloud, you can get significant cost savings by using an IaaS-based approach to disaster recovery. 
+If a primary datacenter fails, you can create VMs running on Azure to run your critical applications and then shut them 
+down when the primary datacenter becomes operational again.
+
+### <ins> Azure Virtual Desktop </ins>
+
+Another type of virtual machine is the Azure Virtual Desktop. Azure Virtual Desktop is a desktop and application
+virtualization service that runs on the cloud. It enables you to use a cloud-hosted version of Windows from any location. 
+
+Azure Virtual Desktop provides centralized security management for users' desktops with Azure Active Directory (Azure AD).
+You can enable multifactor authentication to secure user sign-ins, and secure access to data by assigning 
+granular role-based access controls (RBACs) to users.
+
+The data and apps are separated from the local hardware. The actual desktop and apps are running in the cloud.
+
+### <ins> Azure Containers </ins>
+
+If you want to run multiple instances of an application on a single host machine, containers are an excellent choice.
+Containers are a virtualization environment. Much like running multiple virtual machines on a single physical host, you 
+can run multiple containers on a single physical or virtual host.
+
+Containers are lightweight and designed to be created, scaled out, and stopped dynamically. 
+It's possible to create and deploy virtual machines as application demand increases, but containers are a 
+lighter weight, more agile method. 
+
+ - **Azure Container Instances:**  Azure Container Instances offer the fastest and simplest way to run a container in 
+Azure; without having to manage any virtual machines or adopt any additional services. Azure Container Instances are a PaaS offering. 
+ - **Azure Kubernetes Service:** Azure Kubernetes Service (AKS) is a container orchestration service. An orchestration 
+service manages the lifecycle of containers. When you're deploying a fleet of containers, AKS can make fleet management simpler and more efficient.
+
+### <ins> Azure Functions </ins>
+
+Azure functions is an event-driven, serverless compute option that doesn't require maintaining VMs or containers.
+If you build an app using VMs or containers, those resources have to be "running" in order for you app to function.
+With Azure Functions, an event awakens the function, alleviating the need to keep resources provisioned when 
+there are no events.
+
+Using Azure Functions is ideal when you're only concerned about the code running your service and not about the underlying
+platform or infrastructure.  Functions are commonly used when you need to perform work in response to an event 
+(often via a REST request), timer, or message from another Azure service, and when that work can be completed quickly, 
+within seconds or less.
+
+Azure Functions runs your code when it's triggered and automatically deallocates resources when the function is finished. 
+In this model, you're only charged for the CPU time used while your function runs.
+
+Functions can be either stateless or stateful. When they're stateless (the default), they behave as if they're restarted
+every time they respond to an event. When they're stateful (called Durable Functions), a context is passed through the 
+function to track prior activity.
+
+### <ins> Application Hosting Options </ins>
+
+If you need to host your applications on Azure, you might initially turn to a VM or containers.
+While both VMs and containers provide excellent, robust and dynamic hosting solutions, there are other hosting options 
+that you can use with Azure, including Azure App Service.
+
+App Service enables you to build and host web apps, background jobs, mobile back-ends and RESTful APIs in the programming
+language of you choice without managing infrastructure.
+
+Types of App Services:
+ - Web Apps
+   - App Service includes full support for hosting web apps by using ASP.NET, ASP.NET Core, Java, Ruby, Node.js, PHP, or Python. You can choose either Windows or Linux as the host operating system.
+ - API Apps
+   - Much like hosting a website, you can build REST-based web APIs by using your choice of language and framework. 
+   - You get full Swagger support and the ability to package and publish your API in Azure Marketplace. The produced apps can be consumed from any HTTP- or HTTPS-based client.
+ - WebJobs
+   - You can use the WebJobs feature to run a program (.exe, Java, PHP, Python, or Node.js) or script (.cmd, .bat, PowerShell, or Bash) in the same context as a web app, API app, or mobile app. 
+   - They can be scheduled or run by a trigger.
+   - WebJobs are often used to run background tasks as part of your application logic.
+ - Mobile Apps
+   - Use the Mobile Apps feature of App Service to quickly build a back end for iOS and Android apps
+   - There's SDK support for native iOS and Android, Xamarin, and React native apps.
+
+App Service handles most of the infrastructure decisions you deal with in hosting web-accessible apps:
+ - Deployment and management are integrated into the platform.
+ - Endpoints can be secured.
+ - Sites can be scaled quickly to handle high traffic loads.
+ - The built-in load balancing and traffic manager provide high availability.
+
+
+YOU ARE HERE: https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network
