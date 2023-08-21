@@ -1,7 +1,5 @@
 # [Azure Fundamentals](https://learn.microsoft.com/en-us/certifications/resources/study-guides/AZ-900)
 
-https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azure-architecture-services/
-
 [1 Cloud Computing](#ins1-cloud-computingins)
  - [1.1 What is cloud computing](#inswhat-is-cloud-computingins)
  - [1.2 The shared responsibility model](#insthe-shared-responsibility-modelins)
@@ -23,7 +21,21 @@ https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-azu
 [4 Core Architectural Components of Azure](#ins4-core-architectural-components-of-azureins)
  - [4.1 Physical Infrastructure](#ins-physical-infrastructure-ins)
  - [4.2 Management Infrastructure](#ins-management-infrastructure-ins)
- - [4.3 Compute and Networking Services](#ins-compute-and-networking-services-ins)
+
+[5 Compute and Networking Services](#ins5-compute-and-networking-services-ins)
+ - [5.1 Virtual Machines](#ins-virtual-machines-ins)
+ - [5.2 Virtual Desktop](#ins-azure-virtual-desktop-ins)
+ - [5.3 Containers](#ins-azure-containers-ins)
+ - [5.4 Functions](#ins-azure-functions-ins)
+ - [5.5 Application Hosting Options](#ins-application-hosting-options-ins)
+ - [5.6 Virtual Networking](#ins-virtual-networking-ins)
+ - [5.7 Virtual Private Networks](#ins-virtual-private-networks-ins)
+ - [5.8 Express Route](#ins-expressroute-ins)
+
+[6 Storage Services](#ins-6-storage-services-ins)
+ - [6.1 Storage Accounts](#ins-storage-accounts-ins)
+ - [6.2 Storage Redundancy](#ins-storage-redundancy-ins)
+
 
 ## <ins>1 Cloud Computing</ins>
 
@@ -404,9 +416,9 @@ management group level means that all sub-management groups, subscriptions, reso
 that management group would also inherit those permissions. One assignment on the management group can enable users to 
 have access to everything they need instead of scripting Azure RBAC over different subscriptions.
 
-### <ins> Compute and Networking Services </ins>
+## <ins>5 Compute and Networking Services </ins>
 
-#### <ins> Virtual Machines </ins>
+### <ins> Virtual Machines </ins>
 
 With Azure Virtual Machines, you can create and use VMs in the cloud.
 VMs provide IaaS in the form of a virtualized server, and can be used in many ways.
@@ -538,5 +550,203 @@ App Service handles most of the infrastructure decisions you deal with in hostin
  - Sites can be scaled quickly to handle high traffic loads.
  - The built-in load balancing and traffic manager provide high availability.
 
+### <ins> Virtual Networking </ins>
 
-YOU ARE HERE: https://learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/8-virtual-network
+Azure virtual networks and virtual subnets enable Azure resources to communicate with each other, with users on the internet,
+and with your on-premises client computers. You can think of an Azure network as an extension of your on-premises
+network with resources that link other Azure resources.
+
+Azure virtual networks provide the following key networking capabilities:
+ - Isolation and segmentation
+ - Internet communications
+ - Communicate between Azure resources 
+ - Communicate with on-premises resources 
+ - Route network traffic 
+ - Filter network traffic 
+ - Connect virtual networks
+
+Azure virtual networking supports both public and private endpoints to enable communication between external or internal 
+resources with other internal resources.
+
+ - Public endpoints have a public IP address and can be accessed from anywhere in the world.
+ - Private endpoints exist within a virtual network and have a private IP address from within the address space of that virtual network.
+
+#### <ins> Isolation and Segmentation </ins>
+
+Azure virtual network allows you to crate multiple isolated virtual networks. When you set up a virtual network, 
+you define a private IP address space by using either pulbic or private IP address ranges. The IP range only exists
+within the virtual network and isn't internet routable. You can divide that IP address space into subnets and allocate 
+part of the defined address space to each named subnet.
+
+For name resolution, you can use the3 name resolution service that's built into Azure. You also can configure the 
+virtual network to use either an internal or an external DNS server.
+
+#### <ins> Communications <ins>
+
+**Internet Communictations:**
+
+You can enable incoming connections from the internet by assigning a public IP address to an Azure resource, or putting
+the resource behind a public load balancer.
+
+**Communicate between Azure resources**
+
+You'll want to enable Azure resources to communicate securely with each other. You can do that in one of two ways:
+ - Virtual networks can connect not only VMs but other Azure resources.
+ - Service endpoints connect to other Azure resource types, such as Azure SQL databases and storage accounts.
+
+**Communicate with on-premises resources**
+
+Azure virtual networks enable you to link resources together in your on-premises environment and within your Azure
+subscription. In effect, you can create a network that spans both your local and cloud environments. There are three
+mechanisms for you to achieve this connectivity:
+ - Point-to-site virtual private network connections are from a computer outside your organization back into your corporate
+network. In this case, the client computer initiates an encrypted VPN connection to connect to the Azure virtual network.
+ - Site-to-site virtual private networks link your on-premisesVPN device or gateway to the Azure VPN gateway in a virtual network.
+In effect, the devices in Azure can appear as being on the local network. The connection is encrypted and works over the internet.
+ - Azure ExpressRoute provides a dedicated private connectivity to Azure that doesn't travel over the internet. ExpressRoute
+is useful for environments where you need greater bandwidth and even higher levels of security.
+
+#### <ins> Route network traffic </ins>
+
+By default, Azure routes traffic between subnets on any connected virtual networks, on-premises networks, and the internet.
+You also can control routing and override those settings, as follows:
+ - Route tables allow you to define rules about how traffic should be directed. You can create custom route tables that control how packets 
+are routed between subnets.
+ - Border Gateway Protocol (BGP) works with Azure VPN Gateways, Azure Route Server, or Azure ExpressRoute to propagate
+on-premises BGP routes to Azure Virtual Networks.
+
+#### <ins> Filter network traffic </ins>
+
+Azure virtual networks enable you to filter traffic between subnets by using the following approaches:
+ - Network security groups are Azure resources that can contain multiple inbound and outbound security rules. 
+You can define there rules to allow or block traffic, based on factors such as source and destination IP address, port
+and protocol.
+ - Network virtual appliances are specialized VMs that can be compared to a hardened network appliance. A network 
+virtual appliance carries out a particular network function, such as running a firewall or performing wide area network
+ (WAN) optimization.
+
+#### <ins> Connect virtual networks </ins>
+
+You can link virtual networks together by using virtual network peering. Peering allows two virtual networks to connect 
+directly to each other. Network traffic between peered networks is private, and travels on the Microsoft backbone network,
+never entering the public internet. Peering enables resources in each virtual network to communicate with each other. 
+These virtual networks can be in separate regions, which allows you to create a global interconnected network  through Azure.
+
+User-defined routes (UDR) allow you to control the routing tables between subnets within a virtual network or between virtual
+networks. This allows for greater control over network traffic flow.
+
+### <ins> Virtual Private Networks </ins>
+
+A virtual private network (VPN) uses an encrypted tunnel within another network. VPNs are typically deployed to connect 
+two or more trusted private networks to one another over an untrusted network (typically the public internet).
+
+#### <ins> VPN Gateways </ins>
+
+A VPN Gateway is a type of virtual network gateway. Azure VPN Gateway instances are deployed in a dedicated subnet of the
+virtual network and enable the following connectivity:
+ - Connect on-premises datacenters to virtual networks through a site-to-site connection.
+ - Connect individual devices to virtual networks through a point-to-site connection.
+ - Connect virtual networks to other virtual networks through a network-to-network connection.
+
+All data transfer is encrypted inside a private tunnel as it crosses the internet. You can deploy only one VPN gateway in 
+each virtual network. However, you can use one gateway to connect to multiple locations, which includes other virtual 
+networks or on-premises datacenters.
+
+When setting up a VPN gateway, you must specify the type of VPN - either policy-based or route-based. The primary distinction
+between these two types is how they determine which traffic needs encryption. In Azure, regardless of the VPN type, the method
+of authentication employed is a pre-shared key.
+
+ - Policy-based VPN gateways spescify statically the IP address of packets that should be encrypted through each tunnel.
+ - In Route-based gateways, IPSec tunnels are modeled as a network interface or virtual tunnel interface.  
+Route-based VPNs are the preferred connection method for on-premises devices.
+
+Use route-based VPN gateway if you need any of the following types of connectivity:
+ - Connections between virtual networks
+ - Point-to-site connections
+ - Multisite connections
+ - Coexistence with an Azure ExpressRoute gateway
+
+#### <ins> High-availability scenarios </ins>
+
+If you're configuring a VPN to keep your information safe, you also want to be sure that it's a highly available and fault 
+tolerant VPN configuration. There are a few ways to maximize the resiliency of your VPN gateway:
+
+**Active/standby**:
+
+By default, VPN gateways are deployed as two instances in an active/standby configuration, even if you only see one VPN
+gateway resource in Azure. When planned maintenance or unplanned disruption affects the active instance, the standby 
+instance automatically assumes responsibility for connections without any user intervention. Connections are interrupted 
+during this failover, but they're typically restored within a few seconds for planned maintenance and within 90 seconds 
+for unplanned disruptions.
+
+**Avtive/active**
+
+With the introduction of support for the BGP routing protocol, you can also deploy VPN gateways in an active/active 
+configuration. In this configuration, you assign a unique public IP address to each instance. You then create separate 
+tunnels from the on-premises device to each IP address. You can extend the high availability by deploying an additional
+VPN device on-premises.
+
+**ExpressRoute failover**
+
+Another high-availability option is to configure a VPN gateway as a secure failover path for ExpressRoute connections.
+ExpressRoute circuits have resiliency built in. However, they aren't immune to physical problems that affect the cables 
+delivering connectivity or outages that affect the complete ExpressRoute location. In high-availability scenarios, where 
+there's risk associated with an outage of an ExpressRoute circuit, you can also provision a VPN gateway that uses the
+internet as an alternative method of connectivity. In this way, you can ensure there's always a connection to the virtual
+networks.
+
+**Zone-redundant Gateways**
+
+In regions that support availability zones, VPN gateways and ExpressRoute gateways can be deployed in a zone-redundant 
+configuration. Deploying gateways in Azure availability zones physically and logically separates gateways within a region
+while protecting your on-premises network connectivity to Azure from zone-level failures. These gateways require different
+gateway stock keeping units (SKUs) and use Standard public IP addresses instead of Basic public IP addresses.
+
+### <ins> ExpressRoute </ins>
+
+... Not even going to bother with ExpressRoute and Azure DNS for now. Read and take notes before the exam.
+
+## <ins> 6 Storage Services </ins>
+
+### <ins> Storage Accounts </ins>
+
+A storage account provides a unique namespace for your Azure Storage data that's accessible from anywhere in the world
+over HTTP or HTTPS. Data in this account is secure, highly available, durable and massively scalable.
+
+When you create your storage account, you'll start by picking the storage account type. 
+The type of account determines the storage services and redundancy options and has an impact on the use cases.
+
+Redundancy Options (will be covered in detail later):
+ - Locally redundant storage (LRS)
+ - Geo-redundant storage (GRS)
+ - Read-access geo-redundant storage (RA-GRS)
+ - Zone-redundant storage (ZRS)
+ - Geo-zone-redundant storage (GZRS)
+ - Red-access geo-zone-redundant storage (RA-GZRS)
+
+| Type                        | Supported Services                                                                        | Redundancy Options                   | Usage                                                                                                                                                                                                                                        |
+|-----------------------------|-------------------------------------------------------------------------------------------|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Standard general-purpose v2 | Blob Storage (including Data Lake Storage), Queue Storage, Table Storage, and Azure Files | LRS, GRS, RA-GRS, ZRS, GZRS, RA-GZRS | Standard storage account type for blobs, file shares, queues, and tables. Recommended for most scenarios using Azure Storage. If you want support for network file system (NFS) in Azure Files, use the premium file shares account type.    | 
+| Premium block blobs         | Blob Storage (including Data Lake Storage)                                                | LRS, ZRS                             | Premium storage account type for block blobs and append blobs. Recommended for scenarios with high transaction rates or that use smaller objects or require consistently low storage latency.                                                |
+| Premium file shares         | Azure Files                                                                               | LRS, ZRS                             | Premium storage account type for file shares only. Recommended for enterprise or high-performance scale applications. Use this account type if you want a storage account that supports both Server Message Block (SMB) and NFS file shares. |
+| Premium page blobs          | Page blobs only                                                                           | LRS                                  | 	Premium storage account type for page blobs only.                                                                                                                                                                                           |
+
+#### <ins> Storage Account Endpoints </ins>
+
+One of the benefits of using an Azure Storage Account is having a unique namespace in Azure for your data.
+In order to do this, every storage account in Azure must have a unique-in-Azure account name. The combination of the account
+name and the Azure Storage service endpoint forms the endpoints for your storage account.
+
+The following table show the endpoint format for Azure Storage Services:
+
+| Storage Service        | Endpoint                                              |
+|------------------------|-------------------------------------------------------|
+| Blob storage           | https://<storage-account-name>.blob.core.windows.net  |
+| Data Lake Storage Gen2 | https://<storage-account-name>.dfs.core.windows.net   |
+| Azure Files            | https://<storage-account-name>.file.core.windows.net  | 
+| Queue Storage          | https://<storage-account-name>.queue.core.windows.net |
+| Table Storage          | https://<storage-account-name>.table.core.windows.net | 
+
+### <ins> Storage Redundancy </ins>
+
+https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/3-redundancy
