@@ -35,6 +35,9 @@
 [6 Storage Services](#ins-6-storage-services-ins)
  - [6.1 Storage Accounts](#ins-storage-accounts-ins)
  - [6.2 Storage Redundancy](#ins-storage-redundancy-ins)
+ - [6.3 Redundancy in Secondary Regions](#ins-redundancy-in-a-secondary-region-ins)
+ - [6.4 Storage Services](#ins-storage-services-ins)
+ - [6.5 Data Migration Options](#ins-data-migration-options-ins)
 
 
 ## <ins>1 Cloud Computing</ins>
@@ -792,6 +795,115 @@ networking updates, such as DNS repointing.
 Microsoft recommends using ZRS in the primary region for scenarios that require high availability.
 ZRS is also recommended for restricting replication of data within a country or region to meet data governance requirements.
 
-#### <ins> Redundancy in a Secondary Region </ins>
+### <ins> Redundancy in a Secondary Region </ins>
 
-https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/3-redundancy
+For applications requiring high durability, you can choose to additionally copy the data in your storage account to a 
+secondary region that is hundreds of miles away from the primary region.
+
+When you create a storage account, you select the primary region for the account. The secondary region is based on 
+Azure Region Pairs, and can't be changed.
+
+There are two options for copying data to a secondary region; geo-redundant storage (GRS) and geo-zone-redundant storage
+(GZRS), whith GRS being similar to LRS in two regions, and GZRS being similar to running ZRS in the primary region, and
+LRS in the secondary region.
+
+#### <ins> Geo-redundant storage </ins>
+
+GRS copies your data synchronously three times within a single physical location in the primary region using LRS.
+It then copies your data asynchrounously to a single physical location in the secondary region (the region pair) 
+using LRS. GRS offers durability for Azure Storage data objects of at least 16 nines (99.99999999999999%) over a given year.
+
+<img alt="GRS model" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-storage-services/media/geo-redundant-storage-3432d558.png"/>
+
+#### <ins> Geo-zone-redundant storage </ins>
+
+GZRS combines high availability provided by redundancy across availability zones with protection from regional 
+outages provided by geo-replication. Data in a GZRS storage account is copies across three Azure availability zones in the 
+primary region (similar to ZRS) and is also replicated to a secondary geographic region, using LRS, for protection from 
+regional disasters.
+
+<img alt="GZRS model" src="https://learn.microsoft.com/en-us/training/wwl-azure/describe-azure-storage-services/media/geo-zone-redundant-storage-138ab5af.png"/>
+
+### <ins> Storage Services </ins>
+
+The Azure Storage platform includes the following data services:
+ - **Azure Blobs**: A massively scalable object store for text and binary data.
+ - **Azure Files**: Managed file shares for cloud or on-premises deployments.
+ - **Azure Queues**: A messaging store for reliable messaging between application components.
+ - **Azure Disks**: Block-level storage volumes for Azure VMs.
+ - **Azure Tables**: NoSQL table option for structured non-relational data.
+
+#### <ins> Benefits of Azure Storage </ins>
+
+Azure Storage services offer the following benefits for application developers and IT professionals:
+ - **Durable and highly available**: Redundancy ensures that your data is safe if transient hardware failures occur.
+ - **Secure**: All data written to an Azure storage account is encrypted by the service. Azure Storage provides you with
+fine-grained control over who has access to your data.
+ - **Scalable**: Azure Storage is designed to be massively scalable to meet the data storage and performance needs of today's applications.
+ - **Managed**: Azure handles hardware maintenance, updates, and critical issues for you.
+ - **Accessible**: Data in Azure Storage is accessible from anywhere in the world over HTTP or HTTPS. 
+   - Microsoft provides client libraries for Azure Storage in a variety of languages, as well as a mature REST API. 
+   - Azure Storage supports scripting in Azure PowerShell or Azure CLI. 
+   - The Azure portal and Azure Storage Explorer offer easy visual solutions for working with your data.
+
+#### <ins> Azure Blobs </ins>
+
+Azure Blob storage is an object storage solution for the cloud. It can store massive amounts of data, such as text or binary
+data. Azure blob storage is unstructured, meaning that there are no restrictions on the kinds of data it can hold.
+
+Blob storage is ideal for:
+ - Serving image or documents directly to a browser
+ - Storing files for distributed access
+ - Streaming video and audio
+ - Storing data for backup and restore, disaster recovery and archiving.
+ - Storing data for analysis by an on-premises or Azure-hosted service.
+
+#### <ins> Blob Storage Tiers </ins>
+
+Azure Storage offers different access tiers for your blob storage, helping you store object data in the most cost-effective manner. The available access tiers include:
+ - Hot access tier: Optimized for storing data that is accessed frequently (images for your website). 
+ - Cool access tier: Optimized for data that is infrequently accessed and stored for at least 30 days (nvoices for your customers). 
+ - Cold access tier: Optimized for storing data that is infrequently accessed and stored for at least 90 days. 
+ - Archive access tier: Appropriate for data that is rarely accessed and stored for at least 180 days, with flexible latency requirements (long-term backups).
+
+The following considerations apply to the different access tiers:
+ - Hot, cool, and cold access tiers can be set at the account level. The archive access tier isn't available at the account level. 
+ - Hot, cool, cold, and archive tiers can be set at the blob level, during or after upload. 
+ - Data in the cool and cold access tiers can tolerate slightly lower availability, but still requires high durability, retrieval latency, and throughput characteristics similar to hot data. For cool and cold data, a lower availability service-level agreement (SLA) and higher access costs compared to hot data are acceptable trade-offs for lower storage costs. 
+ - Archive storage stores data offline and offers the lowest storage costs, but also the highest costs to rehydrate and access data.
+
+#### <ins> Azure Files </ins>
+
+Azure Files Storage offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB)
+or Network File System (NFS) protocols. Azure Files file shares can be mounted concurrently by cloud or on-premises deployments. 
+SMB Azure file shares are accessible form Windows, Linux and MacOS clients. NFS Azure Files shares are accessible from Linux or MacOS clients.
+Additionally, SMB Azure file shares can be cached on Windows Servers with Azure FIle Sync for fast access near where the data is being used.
+
+**Azure Files key benefits**
+ - **Shared access**: Azure file shares support the industry standard SMB and NFS protocols, meaning you can seamlessly replace your on-premises file shares with Azure file shares.
+ - **Fully managed**: Azure file shares can be created without the need to manage hardware or an OS. This means you don't have to deal with patching the server OS with critical security upgrades or replacing faulty hard disks. 
+ - **Scripting and tooling**: PowerShell cmdlets and Azure CLI can be used to create, mount, and manage Azure file shares as part of the administration of Azure applications.
+ - **Resiliency**: Azure Files has been built from the ground up to always be available.
+ - **Familiar programmability**: Applications running in Azure can access data in the share via file system I/O APIs. Developers can therefore use their existing code and skills to migrate existing applications. In addition to System IO APIs, you can use Azure Storage Client Libraries or the Azure Storage REST API.
+
+#### <ins> Azure Queues </ins>
+
+Azure Queue storage is a service for storing large numbers of messages. Once stored, you can access the messages from 
+anywhere in the world via authenticated calls using HTTP or HTTPS. A queue can contain as many messages as your storage
+account has room for. Each individual message can be up to 64KB in size. 
+
+#### <ins> Azure Disks </ins>
+
+Azure Disk storage, are block-level storage volumes managed by Azure for use with Azure VMs.
+Conceptually, they're the same as a physical disk, but they're virtualized - offering greater resiliency and availability 
+than a physical disk. With managed disks, all you have to do is provision the disk, and Azure will take care of the rest.
+
+#### <ins> Azure Tables </ins>
+
+Azure table storage stores large amounts of structured data. Azure tables are a NoSQL datastore that accepts
+authenticated calls from inside and outside the Azure Cloud. This enables you to use Azure tables to build your hybrid
+or multi-cloud solution and have your data always available. Azure tables are ideal for storing structured, non-relational data.
+
+### <ins> Data Migration Options </ins>
+
+https://learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/6-identify-azure-data-migration-options
